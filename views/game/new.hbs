@@ -1,0 +1,1 @@
+<h1>Create game</h1>
