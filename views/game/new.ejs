@@ -2,31 +2,31 @@
 
 	<label for = 'title'>Title</label>
 	<input id = 'title' name = 'title' type = 'text' autocomplete = 'off' autofocus
-				 value = '{{game.title}}'>
+				 value = '<%= game.title %>'>
 
 	<br>
 
 	<label for = 'tagline'>Tagline</label>
 	<input id = 'tagline' name = 'tagline' type = 'text' autocomplete = 'off'
-				 value = '{{game.tagline}}'>
+				 value = '<%= game.tagline %>'>
 
 	<br>
 
 	<label for = 'genre'>Genre</label>
 	<select id = 'genre' name = 'genre'>
-		{{#each genres}}
-			<option value = '{{this._id}}'>{{this.name}}</option>
-		{{/each}}
+		<% genres.forEach(genre => { %>
+			<option value='<%= genre.id %>'><%= genre.name %></option>
+		<% }) %>
 	</select>
 
 	<br>
 
 	<label for = 'description'>Description</label>
-	<textarea id = 'description' name = 'description' cols = '30' rows = '10'>{{game.description}}</textarea>
+	<textarea id = 'description' name = 'description' cols = '30' rows = '10'><%= game.description %></textarea>
 
 	<br>
 
-	{{>errorMessage}}
+	<%- include('../partials/errorMessage') %>
 
 	<button type = 'submit'>Submit</button>
 

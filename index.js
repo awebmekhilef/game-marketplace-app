@@ -3,8 +3,8 @@ if (process.env.NODE_ENV === 'development')
 
 const express = require('express')
 const mongoose = require('mongoose')
-const handlebars = require('express-handlebars')
 const path = require('path')
+const ejsLayouts = require('express-ejs-layouts')
 
 const indexRouter = require('./routes/indexRouter')
 const gameRouter = require('./routes/gameRouter')
@@ -16,15 +16,11 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
 // --------------- VIEW ENGINE ---------------
-app.set('view engine', 'hbs')
+app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, 'views'))
+app.set('layout', 'layouts/main')
 
-app.engine('hbs', handlebars({
-	layoutsDir: path.join(__dirname, 'views', 'layouts'),
-	partialsDir: path.join(__dirname, 'views', 'partials'),
-	defaultLayout: 'main',
-	extname: '.hbs',
-}))
+app.use(ejsLayouts)
 
 // --------------- DATABASE ---------------
 mongoose.connect(process.env.DB_URI, {
