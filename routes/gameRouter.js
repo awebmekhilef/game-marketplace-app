@@ -3,16 +3,28 @@ const router = require('express').Router()
 const Game = require('../models/game')
 const Genre = require('../models/genre')
 
+// NEW GAME PAGE
 router.get('/new', async (req, res) => {
-	renderNewPage(res, new Game(), false)
+	renderNewPage(res, new Game({}), false)
 })
 
+// EDIT GAME PAGE
 router.get('/edit/:id', (req, res) => {
 	res.render('game/edit')
 })
 
-router.get('/:id', (req, res) => {
-	res.render('game')
+// VIEW GAME PAGE
+router.get('/:id', async (req, res) => {
+	try {
+		const game = await Game.findById(req.params.id)
+			.populate('genre')
+
+		res.render('game', {
+			game
+		})
+	} catch (err) {
+		res.redirect('/')
+	}
 })
 
 router.post('/', async (req, res) => {
@@ -34,11 +46,11 @@ router.post('/', async (req, res) => {
 
 async function renderNewPage(res, game, hasError) {
 	try {
-		const genres = await Genre.find({}).lean()
+		const genres = await Genre.find({})
 
 		const params = {
 			genres,
-			game: game.toObject(),
+			game,
 			errMsg: hasError ? 'An error occurred' : ''
 		}
 

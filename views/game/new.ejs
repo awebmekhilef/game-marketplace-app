@@ -1,33 +1,37 @@
 <form action = '/game' method = 'post'>
 
-	<label for = 'title'>Title</label>
-	<input id = 'title' name = 'title' type = 'text' autocomplete = 'off' autofocus
-				 value = '<%= game.title %>'>
+    <label for = 'title'>Title</label>
+    <input id = 'title' name = 'title' type = 'text' autocomplete = 'off' autofocus
+           value = '<%= game.title %>'>
 
-	<br>
+    <br>
 
-	<label for = 'tagline'>Tagline</label>
-	<input id = 'tagline' name = 'tagline' type = 'text' autocomplete = 'off'
-				 value = '<%= game.tagline %>'>
+    <label for = 'tagline'>Tagline</label>
+    <input id = 'tagline' name = 'tagline' type = 'text' autocomplete = 'off'
+           value = '<%= game.tagline %>'>
 
-	<br>
+    <br>
 
-	<label for = 'genre'>Genre</label>
-	<select id = 'genre' name = 'genre'>
-		<% genres.forEach(genre => { %>
-			<option value='<%= genre.id %>'><%= genre.name %></option>
-		<% }) %>
-	</select>
+    <label for = 'genre'>Genre</label>
+    <select id = 'genre' name = 'genre'>
+        <% genres.forEach(genre => { %>
+            <% if(genre._id.equals(game.genre)) { %>
+                <option selected value = '<%=genre._id%>'><%= genre.name %></option>
+            <% } else { %>
+                <option value = '<%=genre._id%>'><%= genre.name %></option>
+            <% } %>
+        <% }) %>
+    </select>
 
-	<br>
+    <br>
 
-	<label for = 'description'>Description</label>
-	<textarea id = 'description' name = 'description' cols = '30' rows = '10'><%= game.description %></textarea>
+    <label for = 'description'>Description</label>
+    <textarea id = 'description' name = 'description' cols = '30' rows = '10'><%= game.description %></textarea>
 
-	<br>
+    <br>
 
-	<%- include('../partials/errorMessage') %>
+    <%- include('../partials/errorMessage') %>
 
-	<button type = 'submit'>Submit</button>
+    <button type = 'submit'>Submit</button>
 
 </form>
