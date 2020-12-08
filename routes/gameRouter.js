@@ -74,6 +74,17 @@ router.post('/new', async (req, res) => {
 	}
 })
 
+// DELETE GAME
+router.delete('/:id', async (req, res) => {
+	try {
+		await Game.findByIdAndDelete(req.params.id)
+
+		res.redirect(`/`)
+	} catch (err) {
+		res.redirect(`/game/${req.params.id}/edit`)
+	}
+})
+
 async function renderNewPage(res, game, hasError) {
 	try {
 		const genres = await Genre.find({})
