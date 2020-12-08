@@ -1,1 +1,7 @@
 <h1>All games</h1>
+
+<% games.forEach(game => { %>
+    <a href='/game/<%= game.id %>'>
+        <h3><%= game.title %></h3>
+    </a>
+<% }) %>
