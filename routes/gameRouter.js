@@ -34,7 +34,7 @@ router.get('/:id', async (req, res) => {
 })
 
 // EDIT GAME
-router.post('/:id/edit', async (req, res) => {
+router.patch('/:id/edit', async (req, res) => {
 	let game
 
 	try {

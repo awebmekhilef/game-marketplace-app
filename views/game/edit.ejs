@@ -1,6 +1,6 @@
 <h1>Edit game</h1>
 
-<form action = '/game/<%= game.id %>/edit' method = 'post'>
+<form action = '/game/<%= game.id %>/edit/?_method=PATCH' method = 'post'>
 
     <%- include('../partials/formFields') %>
 

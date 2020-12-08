@@ -3,8 +3,9 @@ if (process.env.NODE_ENV === 'development')
 
 const express = require('express')
 const mongoose = require('mongoose')
-const path = require('path')
 const ejsLayouts = require('express-ejs-layouts')
+const methodOverride = require('method-override')
+const path = require('path')
 
 const indexRouter = require('./routes/indexRouter')
 const gameRouter = require('./routes/gameRouter')
@@ -14,6 +15,9 @@ const app = express()
 // --------------- BODY PARSER ---------------
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
+
+// --------------- METHOD OVERRIDE ---------------
+app.use(methodOverride('_method'))
 
 // --------------- VIEW ENGINE ---------------
 app.set('view engine', 'ejs')
