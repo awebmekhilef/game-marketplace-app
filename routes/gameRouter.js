@@ -9,8 +9,14 @@ router.get('/new', async (req, res) => {
 })
 
 // EDIT GAME PAGE
-router.get('/edit/:id', (req, res) => {
-	res.render('game/edit')
+router.get('/:id/edit', async (req, res) => {
+	try {
+		const game = await Game.findById(req.params.id)
+
+		renderEditPage(res, game, false)
+	} catch (err) {
+		res.redirect(`/game/${req.params.id}`)
+	}
 })
 
 // VIEW GAME PAGE
@@ -27,7 +33,31 @@ router.get('/:id', async (req, res) => {
 	}
 })
 
-router.post('/', async (req, res) => {
+// EDIT GAME
+router.post('/:id/edit', async (req, res) => {
+	let game
+
+	try {
+		game = await Game.findById(req.params.id)
+
+		game.title = req.body.title
+		game.tagline = req.body.tagline
+		game.description = req.body.description
+		game.genre = req.body.genre
+
+		await game.save()
+
+		res.redirect(`/game/${game.id}`)
+	} catch (err) {
+		if(game)
+			renderEditPage(res, game, true)
+		else
+			res.redirect('/')
+	}
+})
+
+// CREATE NEW GAME
+router.post('/new', async (req, res) => {
 	const newGame = new Game({
 		title: req.body.title,
 		tagline: req.body.tagline,
@@ -57,6 +87,22 @@ async function renderNewPage(res, game, hasError) {
 		res.render('game/new', params)
 	} catch (err) {
 		res.redirect('/')
+	}
+}
+
+async function renderEditPage(res, game, hasError) {
+	try {
+		const genres = await Genre.find({})
+
+		const params = {
+			genres,
+			game,
+			errMsg: hasError ? 'An error occurred' : ''
+		}
+
+		res.render('game/edit', params)
+	} catch (err) {
+		res.redirect(`/game/${game.id}`)
 	}
 }
 
