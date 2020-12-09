@@ -7,8 +7,6 @@
 						 value = '<%= game.title %>'>
 		</div>
 
-		<br>
-
 		<div class = 'form-group'>
 			<label class = 'form-label' for = 'tagline'>Tagline</label>
 			<input class = 'form-control' id = 'tagline'
@@ -16,11 +14,9 @@
 						 value = '<%= game.tagline %>'>
 		</div>
 
-		<br>
-
 		<div class = 'form-group'>
 			<label class = 'form-label' for = 'genre'>Genre</label>
-			<select class = 'form-select' id = 'genre' name = 'genre'>
+			<select class = 'form-control' id = 'genre' name = 'genre'>
 				<% genres.forEach(genre => { %>
 					<% if(genre._id.equals(game.genre)) { %>
 						<option selected value = '<%= genre._id %>'><%= genre.name %></option>
@@ -31,15 +27,11 @@
 			</select>
 		</div>
 
-		<br>
-
 		<div class = 'form-group'>
 			<label class = 'form-label' for = 'description'>Description</label>
 			<textarea class = 'form-control' id = 'description' name = 'description'
 								rows = '5'><%= game.description %></textarea>
 		</div>
-
-		<br>
 	</div>
 
 	<div class = 'col-md-4' align='center'>
