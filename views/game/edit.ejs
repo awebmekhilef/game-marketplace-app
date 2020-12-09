@@ -1,4 +1,6 @@
-<h1>Edit game</h1>
+<h2 class='my-4'>
+    Edit game
+</h2>
 
 <form action = '/game/<%= game.id %>/edit/?_method=PATCH' method = 'post'>
 
@@ -6,9 +8,8 @@
 
     <%- include('../partials/errorMessage') %>
 
-    <a href = '/game/<%= game.id %>'>Cancel</a>
-
-    <button type = 'submit'>Save</button>
+    <a class='btn btn-outline-danger' href='/game/<%= game.id %>'>Cancel</a>
+    <button class = 'btn btn-primary' type = 'submit'>Save</button>
 
 </form>
 

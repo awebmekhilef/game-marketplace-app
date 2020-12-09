@@ -1,29 +1,31 @@
-<label for = 'title'>Title</label>
-<input id = 'title' name = 'title' type = 'text' autocomplete = 'off' autofocus
-       value = '<%= game.title %>'>
+<label class = 'form-label' for = 'title'>Title</label>
+<input class = 'form-control form-control-lg' id = 'title'
+			 name = 'title' type = 'text' autocomplete = 'off' autofocus
+			 value = '<%= game.title %>'>
 
 <br>
 
-<label for = 'tagline'>Tagline</label>
-<input id = 'tagline' name = 'tagline' type = 'text' autocomplete = 'off'
-       value = '<%= game.tagline %>'>
+<label class = 'form-label' for = 'tagline'>Tagline</label>
+<input class = 'form-control' id = 'tagline'
+			 name = 'tagline' type = 'text' autocomplete = 'off'
+			 value = '<%= game.tagline %>'>
 
 <br>
 
-<label for = 'genre'>Genre</label>
-<select id = 'genre' name = 'genre'>
-    <% genres.forEach(genre => { %>
-        <% if(genre._id.equals(game.genre)) { %>
-        <option selected value = '<%=genre._id%>'><%= genre.name %></option>
-        <% } else { %>
-        <option value = '<%=genre._id%>'><%= genre.name %></option>
-        <% } %>
-    <% }) %>
+<label class = 'form-label' for = 'genre'>Genre</label>
+<select class = 'form-select' id = 'genre' name = 'genre'>
+	<% genres.forEach(genre => { %>
+		<% if(genre._id.equals(game.genre)) { %>
+		<option selected value = '<%= genre._id %>'><%= genre.name %></option>
+		<% } else { %>
+		<option value = '<%= genre._id %>'><%= genre.name %></option>
+		<% } %>
+	<% }) %>
 </select>
 
 <br>
 
-<label for = 'description'>Description</label>
-<textarea id = 'description' name = 'description' cols = '30' rows = '10'><%= game.description %></textarea>
+<label class = 'form-label' for = 'description'>Description</label>
+<textarea class='form-control' id = 'description' name = 'description' rows='5'><%= game.description %></textarea>
 
 <br>
