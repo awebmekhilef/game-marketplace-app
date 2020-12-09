@@ -49,7 +49,7 @@ router.patch('/:id/edit', async (req, res) => {
 
 		res.redirect(`/game/${game.id}`)
 	} catch (err) {
-		if(game)
+		if (game)
 			renderEditPage(res, game, true)
 		else
 			res.redirect('/')

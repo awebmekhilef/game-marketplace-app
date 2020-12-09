@@ -1,9 +1,19 @@
-<h2 class='my-4'>
-    All games
+<h2 class = 'my-4'>
+	All games
 </h2>
 
-<% games.forEach(game => { %>
-    <a href='/game/<%= game.id %>'>
-        <h3><%= game.title %></h3>
-    </a>
-<% }) %>
+<div class = 'row'>
+	<% games.forEach(game => { %>
+		<div class = 'col-lg-3 col-md-4 col-sm-4 col-6'>
+			<div class = 'card-transparent mb-4'>
+				<a href = '/game/<%= game.id %>'>
+					<div class = 'card-img-top'>
+						<img class = 'img-fluid' src = '/img/coverImagePlaceholder.png'>
+					</div>
+
+					<h5 class = 'card-title text-dark mt-2'><%= game.title %></h5>
+				</a>
+			</div>
+		</div>
+	<% }) %>
+</div>
