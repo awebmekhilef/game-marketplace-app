@@ -12,6 +12,9 @@ const gameRouter = require('./routes/gameRouter')
 
 const app = express()
 
+// --------------- PUBLIC DIR ---------------
+app.use(express.static('public/'))
+
 // --------------- BODY PARSER ---------------
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
