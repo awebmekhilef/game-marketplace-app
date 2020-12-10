@@ -65,6 +65,8 @@ router.post('/new', async (req, res) => {
 		description: req.body.description,
 	})
 
+	trySaveCoverImage(newGame, JSON.parse(req.body.cover))
+
 	try {
 		await newGame.save()
 
@@ -84,6 +86,14 @@ router.delete('/:id', async (req, res) => {
 		res.redirect(`/game/${req.params.id}/edit`)
 	}
 })
+
+function trySaveCoverImage(game, cover) {
+	if (cover == null)
+		return
+
+	game.coverImage = Buffer.from(cover.data, 'base64')
+	game.coverImageMimeType = cover.type
+}
 
 async function renderNewPage(res, game, hasError) {
 	try {
