@@ -2,7 +2,8 @@ FilePond.registerPlugin(
 	FilePondPluginImagePreview,
 	FilePondPluginImageResize,
 	FilePondPluginFileEncode,
-	FilePondPluginFileValidateType
+	FilePondPluginFileValidateType,
+	FilePondPluginImageTransform
 )
 
 FilePond.setOptions({
@@ -14,6 +15,6 @@ FilePond.setOptions({
 const inputElement = document.querySelector('input[type="file"]');
 FilePond.create(inputElement, {
 	credits: false,
-	acceptedFileTypes: ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'],
+	acceptedFileTypes: ['image/png', 'image/jpg', 'image/jpeg'],
 	fileValidateTypeLabelExpectedTypes: ''
 })
