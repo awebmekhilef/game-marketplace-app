@@ -16,5 +16,6 @@ const inputElement = document.querySelector('input[type="file"]');
 FilePond.create(inputElement, {
 	credits: false,
 	acceptedFileTypes: ['image/png', 'image/jpg', 'image/jpeg'],
-	fileValidateTypeLabelExpectedTypes: ''
+	fileValidateTypeLabelExpectedTypes: '',
+	imageResizeMode: 'force'
 })
