@@ -16,8 +16,8 @@ const app = express()
 app.use(express.static('public/'))
 
 // --------------- BODY PARSER ---------------
-app.use(express.json())
-app.use(express.urlencoded({ extended: false }))
+app.use(express.json({ limit: '5mb' }))
+app.use(express.urlencoded({ extended: false, limit: '50mb' }))
 
 // --------------- METHOD OVERRIDE ---------------
 app.use(methodOverride('_method'))

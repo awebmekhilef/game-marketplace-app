@@ -33,29 +33,6 @@ router.get('/:id', async (req, res) => {
 	}
 })
 
-// EDIT GAME
-router.patch('/:id/edit', async (req, res) => {
-	let game
-
-	try {
-		game = await Game.findById(req.params.id)
-
-		game.title = req.body.title
-		game.tagline = req.body.tagline
-		game.description = req.body.description
-		game.genre = req.body.genre
-
-		await game.save()
-
-		res.redirect(`/game/${game.id}`)
-	} catch (err) {
-		if (game)
-			renderEditPage(res, game, true)
-		else
-			res.redirect('/')
-	}
-})
-
 // CREATE NEW GAME
 router.post('/new', async (req, res) => {
 	const newGame = new Game({
@@ -73,6 +50,31 @@ router.post('/new', async (req, res) => {
 		res.redirect(`/game/${newGame.id}`)
 	} catch (err) {
 		renderNewPage(res, newGame, true)
+	}
+})
+
+// EDIT GAME
+router.patch('/:id/edit', async (req, res) => {
+	let game
+
+	try {
+		game = await Game.findById(req.params.id)
+
+		game.title = req.body.title
+		game.tagline = req.body.tagline
+		game.description = req.body.description
+		game.genre = req.body.genre
+
+		trySaveCoverImage(game, JSON.parse(req.body.cover))
+
+		await game.save()
+
+		res.redirect(`/game/${game.id}`)
+	} catch (err) {
+		if (game)
+			renderEditPage(res, game, true)
+		else
+			res.redirect('/')
 	}
 })
 
