@@ -13,9 +13,11 @@ FilePond.setOptions({
 })
 
 const inputElement = document.querySelector('input[type="file"]');
-FilePond.create(inputElement, {
+const pond = FilePond.create(inputElement, {
 	credits: false,
 	acceptedFileTypes: ['image/png', 'image/jpg', 'image/jpeg'],
 	fileValidateTypeLabelExpectedTypes: '',
 	imageResizeMode: 'force'
 })
+
+// pond.addFile('<%= game.cover %>')

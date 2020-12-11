@@ -42,7 +42,7 @@ router.post('/new', async (req, res) => {
 		description: req.body.description,
 	})
 
-	trySaveCoverImage(newGame, JSON.parse(req.body.cover))
+	trySaveCoverImage(newGame, req.body.cover)
 
 	try {
 		await newGame.save()
@@ -89,8 +89,13 @@ router.delete('/:id', async (req, res) => {
 	}
 })
 
-function trySaveCoverImage(game, cover) {
-	if (cover == null)
+function trySaveCoverImage(game, encodedCover) {
+	if (encodedCover == null || encodedCover.trim() === '')
+		return
+
+	const cover = JSON.parse(encodedCover)
+
+	if(cover == null)
 		return
 
 	game.coverImage = Buffer.from(cover.data, 'base64')

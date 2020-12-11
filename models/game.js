@@ -31,7 +31,10 @@ const gameSchema = new mongoose.Schema({
 })
 
 gameSchema.virtual('cover').get(function () {
-	return `data:${this.coverImageMimeType};charset=utf-8;base64,${this.coverImage.toString('base64')}`
+	if(this.coverImageMimeType == null || this.coverImage == null)
+		return ''
+
+	return `data:${this.coverImageMimeType};base64,${this.coverImage.toString('base64')}`
 })
 
 module.exports = mongoose.model('Game', gameSchema)

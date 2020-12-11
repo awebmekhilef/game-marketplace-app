@@ -23,8 +23,7 @@
 		<link href = "https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css"
 					rel = "stylesheet">
 
-		<script defer src='/js/filePond.js'></script>
-
+		<!--		<script defer src='/js/filePond.js'></script>-->
 	</head>
 	<body class = 'bg-light'>
 		<%- include('../partials/navbar') %>
@@ -33,19 +32,49 @@
 			<%- body %>
 		</div>
 
-		<script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
-		<script src="https://unpkg.com/filepond/dist/filepond.js"></script>
+		<script src = "https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
+		<script src = "https://unpkg.com/filepond/dist/filepond.js"></script>
 
-		<script src="https://unpkg.com/filepond-plugin-image-resize/dist/filepond-plugin-image-resize.js"></script>
-		<script src="https://unpkg.com/filepond/dist/filepond.js"></script>
+		<script src = "https://unpkg.com/filepond-plugin-image-resize/dist/filepond-plugin-image-resize.js"></script>
+		<script src = "https://unpkg.com/filepond/dist/filepond.js"></script>
 
-		<script src="https://unpkg.com/filepond-plugin-file-encode/dist/filepond-plugin-file-encode.js"></script>
-		<script src="https://unpkg.com/filepond/dist/filepond.js"></script>
+		<script src = "https://unpkg.com/filepond-plugin-file-encode/dist/filepond-plugin-file-encode.js"></script>
+		<script src = "https://unpkg.com/filepond/dist/filepond.js"></script>
 
-		<script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
-		<script src="https://unpkg.com/filepond/dist/filepond.js"></script>
+		<script
+				src = "https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
+		<script src = "https://unpkg.com/filepond/dist/filepond.js"></script>
 
-		<script src="https://unpkg.com/filepond-plugin-image-transform/dist/filepond-plugin-image-transform.js"></script>
-		<script src="https://unpkg.com/filepond/dist/filepond.js"></script>
+		<script src = "https://unpkg.com/filepond-plugin-image-transform/dist/filepond-plugin-image-transform.js"></script>
+		<script src = "https://unpkg.com/filepond/dist/filepond.js"></script>
+
+		<script>
+		FilePond.registerPlugin(
+			FilePondPluginImagePreview,
+			FilePondPluginImageResize,
+			FilePondPluginFileEncode,
+			FilePondPluginFileValidateType,
+			FilePondPluginImageTransform
+		)
+
+		FilePond.setOptions({
+			stylePanelAspectRatio: 250 / 315,
+			imageResizeTargetWidth: 315,
+			imageResizeTargetHeight: 250,
+		})
+
+		const inputElement = document.querySelector('input[type="file"]');
+		const pond = FilePond.create(inputElement, {
+			credits: false,
+			acceptedFileTypes: [ 'image/png', 'image/jpg', 'image/jpeg' ],
+			fileValidateTypeLabelExpectedTypes: '',
+			imageResizeMode: 'force'
+		})
+
+		const data = `<% if(locals.game && game.cover) { %><%= game.cover %><% } else { %><% } %>`
+
+		if(data !== '')
+			pond.addFile(data)
+		</script>
 	</body>
 </html>
