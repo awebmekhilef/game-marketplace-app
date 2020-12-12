@@ -26,8 +26,12 @@ router.get('/:id', async (req, res) => {
 			.populate('genre')
 			.orFail()
 
+		const todayDate = Date.now()
+
 		res.render('game', {
-			game
+			game,
+			daysSincePublished: Math.floor((todayDate - game.createdAt) / (1000 * 3600 * 24)),
+			daysSinceUpdated: Math.floor((todayDate - game.updatedAt) / (1000 * 3600 * 24))
 		})
 	} catch (err) {
 		res.redirect('/')
@@ -96,7 +100,7 @@ function trySaveCoverImage(game, encodedCover) {
 
 	const cover = JSON.parse(encodedCover)
 
-	if(cover == null)
+	if (cover == null)
 		return
 
 	game.coverImage = Buffer.from(cover.data, 'base64')

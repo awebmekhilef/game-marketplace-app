@@ -27,6 +27,14 @@ const gameSchema = new mongoose.Schema({
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'Genre',
 		required: true
+	},
+	createdAt: {
+		type: Date,
+		default: Date.now
+	},
+	updatedAt: {
+		type: Date,
+		default: Date.now
 	}
 })
 
@@ -35,6 +43,11 @@ gameSchema.virtual('cover').get(function () {
 		return ''
 
 	return `data:${this.coverImageMimeType};base64,${this.coverImage.toString('base64')}`
+})
+
+gameSchema.pre('save', function (next) {
+	this.updatedAt = Date.now()
+	next()
 })
 
 module.exports = mongoose.model('Game', gameSchema)
