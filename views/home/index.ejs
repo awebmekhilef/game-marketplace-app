@@ -3,7 +3,11 @@
 </h2>
 
 <% if(games.length === 0) { %>
-	<p class = 'text-muted text-center mt-5'>No games to show</p>
+	<p class = 'text-muted text-center mt-5'>
+		No games to show. Go ahead and <a class='text-muted' href = '/game/new'>
+			<u>create one!</u>
+		</a>
+	</p>
 <% } else { %>
 	<div class = 'row'>
 		<% games.forEach(game => { %>

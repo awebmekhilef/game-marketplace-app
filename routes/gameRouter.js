@@ -11,7 +11,7 @@ router.get('/new', async (req, res) => {
 // EDIT GAME PAGE
 router.get('/:id/edit', async (req, res) => {
 	try {
-		const game = await Game.findById(req.params.id)
+		const game = await Game.findById(req.params.id).orFail()
 
 		renderEditPage(res, game, false)
 	} catch (err) {
@@ -24,6 +24,7 @@ router.get('/:id', async (req, res) => {
 	try {
 		const game = await Game.findById(req.params.id)
 			.populate('genre')
+			.orFail()
 
 		res.render('game', {
 			game
@@ -65,7 +66,7 @@ router.patch('/:id/edit', async (req, res) => {
 		game.description = req.body.description
 		game.genre = req.body.genre
 
-		trySaveCoverImage(game, JSON.parse(req.body.cover))
+		trySaveCoverImage(game, req.body.cover)
 
 		await game.save()
 
@@ -90,7 +91,7 @@ router.delete('/:id', async (req, res) => {
 })
 
 function trySaveCoverImage(game, encodedCover) {
-	if (encodedCover == null || encodedCover.trim() === '')
+	if (typeof encodedCover !== 'string' || encodedCover.trim() === '')
 		return
 
 	const cover = JSON.parse(encodedCover)
