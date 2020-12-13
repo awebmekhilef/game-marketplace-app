@@ -16,7 +16,7 @@
 
 		<div class = 'form-group'>
 			<label class = 'form-label' for = 'genre'>Genre</label>
-			<select class = 'form-control' id = 'genre' name = 'genre'>
+			<select class = 'custom-select' id = 'genre' name = 'genre'>
 				<% genres.forEach(genre => { %>
 					<% if(genre._id.equals(game.genre)) { %>
 						<option selected value = '<%= genre._id %>'><%= genre.name %></option>
