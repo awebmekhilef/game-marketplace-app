@@ -1,10 +1,11 @@
 const mongoose = require('mongoose')
 
+const slugify = require('slugify')
+
 const gameSchema = new mongoose.Schema({
 	title: {
 		type: String,
 		required: true,
-		unique: true,
 		trim: true
 	},
 	tagline: {
@@ -22,6 +23,11 @@ const gameSchema = new mongoose.Schema({
 	coverImage: {
 		type: Buffer,
 		required: true
+	},
+	slug: {
+		type: String,
+		required: true,
+		unique: true
 	},
 	genre: {
 		type: mongoose.Schema.Types.ObjectId,
@@ -43,6 +49,17 @@ gameSchema.virtual('cover').get(function () {
 		return ''
 
 	return `data:${this.coverImageMimeType};base64,${this.coverImage.toString('base64')}`
+})
+
+gameSchema.pre('validate', function (next) {
+	if(this.title) {
+		this.slug = slugify(this.title, {
+			lower: true,
+			strict: true
+		})
+	}
+
+	next()
 })
 
 gameSchema.pre('save', function (next) {

@@ -9,20 +9,23 @@ router.get('/new', async (req, res) => {
 })
 
 // EDIT GAME PAGE
-router.get('/:id/edit', async (req, res) => {
+router.get('/:slug/edit', async (req, res) => {
 	try {
-		const game = await Game.findById(req.params.id).orFail()
+		const game = await Game
+			.findOne({ slug: req.params.slug })
+			.orFail()
 
 		renderEditPage(res, game, false)
 	} catch (err) {
-		res.redirect(`/game/${req.params.id}`)
+		res.redirect(`/game/${req.params.slug}`)
 	}
 })
 
 // VIEW GAME PAGE
-router.get('/:id', async (req, res) => {
+router.get('/:slug', async (req, res) => {
 	try {
-		const game = await Game.findById(req.params.id)
+		const game = await Game
+			.findOne({ slug: req.params.slug })
 			.populate('genre')
 			.orFail()
 
@@ -52,18 +55,18 @@ router.post('/new', async (req, res) => {
 	try {
 		await newGame.save()
 
-		res.redirect(`/game/${newGame.id}`)
+		res.redirect(`/game/${newGame.slug}`)
 	} catch (err) {
 		renderNewPage(res, newGame, true)
 	}
 })
 
 // EDIT GAME
-router.patch('/:id/edit', async (req, res) => {
+router.patch('/:slug/edit', async (req, res) => {
 	let game
 
 	try {
-		game = await Game.findById(req.params.id)
+		game = await Game.findOne({ slug: req.params.slug })
 
 		game.title = req.body.title
 		game.tagline = req.body.tagline
@@ -74,7 +77,7 @@ router.patch('/:id/edit', async (req, res) => {
 
 		await game.save()
 
-		res.redirect(`/game/${game.id}`)
+		res.redirect(`/game/${game.slug}`)
 	} catch (err) {
 		if (game)
 			renderEditPage(res, game, true)
@@ -84,13 +87,13 @@ router.patch('/:id/edit', async (req, res) => {
 })
 
 // DELETE GAME
-router.delete('/:id', async (req, res) => {
+router.delete('/:slug', async (req, res) => {
 	try {
-		await Game.findByIdAndDelete(req.params.id)
+		await Game.findOneAndDelete({ slug: req.params.slug })
 
 		res.redirect(`/`)
 	} catch (err) {
-		res.redirect(`/game/${req.params.id}/edit`)
+		res.redirect(`/game/${req.params.slug}/edit`)
 	}
 })
 
@@ -135,7 +138,7 @@ async function renderEditPage(res, game, hasError) {
 
 		res.render('game/edit', params)
 	} catch (err) {
-		res.redirect(`/game/${game.id}`)
+		res.redirect(`/game/${game.slug}`)
 	}
 }
 
