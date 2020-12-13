@@ -1,6 +1,11 @@
 const mongoose = require('mongoose')
 
 const slugify = require('slugify')
+const marked = require('marked')
+const createDOMPurify = require('dompurify');
+const { JSDOM } = require('jsdom');
+
+const DOMPurify = createDOMPurify(new JSDOM('').window);
 
 const gameSchema = new mongoose.Schema({
 	title: {
@@ -15,6 +20,9 @@ const gameSchema = new mongoose.Schema({
 	description: {
 		type: String,
 		trim: true
+	},
+	markdown: {
+		type: String,
 	},
 	coverImageMimeType: {
 		type: String,
@@ -57,6 +65,10 @@ gameSchema.pre('validate', function (next) {
 			lower: true,
 			strict: true
 		})
+	}
+
+	if(this.description) {
+		this.markdown = marked(DOMPurify.sanitize(this.description))
 	}
 
 	next()
