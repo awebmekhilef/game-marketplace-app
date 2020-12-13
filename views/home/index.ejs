@@ -2,9 +2,32 @@
 	All games
 </h2>
 
+<form method = 'GET' action = '/' class = 'ml-auto mb-4'>
+	<div class = 'input-group'>
+		<input name = 'title' class = 'form-control w-50'
+					 placeholder = 'Search...' value='<%= query.title %>'>
+
+		<select class = 'form-control' name = 'genre'>
+			<option selected value = ''>Choose genre...</option>
+
+			<% genres.forEach(genre => { %>
+				<% if(genre._id.equals(query.genre)) { %>
+					<option selected value = '<%= genre._id %>'><%= genre.name %></option>
+				<% } else { %>
+					<option value = '<%= genre._id %>'><%= genre.name %></option>
+				<% } %>
+			<% }) %>
+		</select>
+
+		<div class = 'input-group-append'>
+			<button class = 'btn btn-dark' type = 'submit'>Go</button>
+		</div>
+	</div>
+</form>
+
 <% if(games.length === 0) { %>
 	<p class = 'text-muted text-center mt-5'>
-		No games to show. Go ahead and <a class='text-muted' href = '/game/new'>
+		No games to show. Go ahead and <a class = 'text-muted' href = '/game/new'>
 			<u>create one!</u>
 		</a>
 	</p>
