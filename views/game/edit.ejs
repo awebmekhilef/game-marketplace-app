@@ -1,17 +1,17 @@
-<h2 class='my-4'>
-    Edit game
+<h2 class = 'my-4'>
+	Edit game
 </h2>
 
 <form action = '/game/<%= game.slug %>/edit/?_method=PATCH' method = 'post'>
 
-    <%- include('../partials/formFields') %>
+	<%- include('../partials/formFields') %>
 
-    <%- include('../partials/errorMessage') %>
+	<%- include('../partials/errorMessage') %>
 
-    <div class='text-right'>
-        <a class='btn btn-outline-danger' href='/game/<%= game.slug %>'>Cancel</a>
-        <button class = 'btn btn-primary' type = 'submit'>Save</button>
-    </div>
+	<div class = 'text-right'>
+		<a class = 'btn btn-outline-danger' href = '/game/<%= game.slug %>'>Cancel</a>
+		<button class = 'btn btn-dark' type = 'submit'>Save</button>
+	</div>
 
 </form>
 

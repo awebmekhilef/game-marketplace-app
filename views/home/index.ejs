@@ -2,10 +2,11 @@
 	All games
 </h2>
 
+<!-- TODO : Responsive input group -->
 <form method = 'GET' action = '/' class = 'ml-auto mb-4'>
 	<div class = 'input-group'>
 		<input name = 'title' class = 'form-control w-50'
-					 placeholder = 'Search...' value='<%= query.title %>'>
+					 placeholder = 'Search...' value = '<%= query.title %>'>
 
 		<select class = 'custom-select' name = 'genre'>
 			<option selected value = ''>Choose genre...</option>
@@ -36,13 +37,19 @@
 		<% games.forEach(game => { %>
 			<div class = 'col-lg-3 col-md-4 col-sm-4 col-6'>
 				<div class = 'card-transparent mb-4'>
-					<a href = '/game/<%= game.slug %>'>
+					<a class = 'text-dark' href = '/game/<%= game.slug %>'>
 						<div class = 'card-img-top'>
 							<img class = 'img-fluid' src = '<%= game.cover %>'>
 						</div>
 
-						<h5 class = 'card-title text-dark mt-2'><%= game.title %></h5>
+						<h6 class = 'card-title mt-2'>
+							<strong><%= game.title %></strong>
+						</h6>
 					</a>
+
+					<p class = "text-decoration-none card-subtitle text-muted">
+						<small><%= game.tagline %></small>
+					</p>
 				</div>
 			</div>
 		<% }) %>

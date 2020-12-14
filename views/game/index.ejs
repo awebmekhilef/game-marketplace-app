@@ -14,16 +14,16 @@
 						<p class = 'card-text mt-3'><small class = 'text-muted'>Genre: <%= game.genre.name %></small></p>
 						<p class = 'card-text'><small class = 'text-muted'>Published:
 								<% if(daysSincePublished === 0) { %>
-																															 Today
+									<span>Today</span>
 								<% } else { %>
-									<%= daysSincePublished %> days ago
+									<%= daysSincePublished %> day(s) ago
 								<% } %>
 							</small></p>
 						<p class = 'card-text'><small class = 'text-muted'>Updated:
 								<% if(daysSinceUpdated === 0) { %>
-																															 Today
+									<span>Today</span>
 								<% } else { %>
-									<%= daysSinceUpdated %> days ago
+									<%= daysSinceUpdated %> day(s) ago
 								<% } %>
 							</small></p>
 
