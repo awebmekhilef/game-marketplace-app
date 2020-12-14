@@ -11,10 +11,10 @@
 			<option selected value = ''>Choose genre...</option>
 
 			<% genres.forEach(genre => { %>
-				<% if(genre._id.equals(query.genre)) { %>
-					<option selected value = '<%= genre._id %>'><%= genre.name %></option>
+				<% if(genre.name === query.genre) { %>
+					<option selected value = '<%= genre.name %>'><%= genre.name %></option>
 				<% } else { %>
-					<option value = '<%= genre._id %>'><%= genre.name %></option>
+					<option value = '<%= genre.name %>'><%= genre.name %></option>
 				<% } %>
 			<% }) %>
 		</select>
