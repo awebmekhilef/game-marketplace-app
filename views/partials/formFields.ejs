@@ -32,11 +32,17 @@
 			<textarea class = 'form-control' id = 'description' name = 'description'
 								rows = '10'><%= game.description %></textarea>
 		</div>
+
+		<div class = 'custom-file'>
+			<input name = 'gameFile' type = 'file' class = 'custom-file-input' id = 'gameFile'>
+			<label class = 'custom-file-label' for = 'gameFile'>Upload file</label>
+			<small class = 'form-text text-muted'>File size limit: 100MB</small>
+		</div>
 	</div>
 
 	<div class = 'col-md-4' align = 'center'>
 		<label align = 'left'>Cover image</label>
-		<input name = 'cover' type = 'file'>
-		<p class='text-muted'>Aspect ratio: 63 x 50 (otherwise resized)</p>
+		<input id = 'file-pond' name = 'cover' type = 'file'>
+		<p class = 'text-muted'>Aspect ratio: 63 x 50 (otherwise resized)</p>
 	</div>
 </div>

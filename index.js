@@ -6,11 +6,20 @@ const mongoose = require('mongoose')
 const ejsLayouts = require('express-ejs-layouts')
 const methodOverride = require('method-override')
 const path = require('path')
+const admin = require('firebase-admin');
 
 const indexRouter = require('./routes/indexRouter')
 const gameRouter = require('./routes/gameRouter')
 
 const app = express()
+
+// --------------- FIREBASE ADMIN ---------------
+admin.initializeApp({
+	credential: admin.credential.cert(
+		JSON.parse(Buffer.from(process.env.GOOGLE_CONFIG_BASE64, 'base64').toString('ascii'))
+	),
+	storageBucket: process.env.BUCKET_NAME
+})
 
 // --------------- BODY PARSER ---------------
 app.use(express.json({ limit: '5mb' }))
@@ -42,7 +51,7 @@ app.use('/', indexRouter)
 app.use('/game', gameRouter)
 
 app.get('*', (req, res) => {
-	res.end("Page not found")
+	res.end('Page not found')
 })
 
-app.listen(process.env.PORT || 3000, () => console.log("Server started"))
+app.listen(process.env.PORT || 3000, () => console.log('Server started'))

@@ -1,7 +1,15 @@
 const router = require('express').Router()
+const multer = require('multer')
 
 const Game = require('../models/game')
 const Genre = require('../models/genre')
+
+const upload = multer({
+	storage: multer.memoryStorage(),
+	limits: {
+		fileSize: 100 * 1024 * 1024 // 100mb
+	}
+})
 
 // NEW GAME PAGE
 router.get('/new', async (req, res) => {
@@ -42,7 +50,7 @@ router.get('/:slug', async (req, res) => {
 })
 
 // CREATE NEW GAME
-router.post('/new', async (req, res) => {
+router.post('/new', upload.single('gameFile'), async (req, res) => {
 	const newGame = new Game({
 		title: req.body.title,
 		tagline: req.body.tagline,
