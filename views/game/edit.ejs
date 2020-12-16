@@ -4,7 +4,7 @@
 
 <form action = '/game/<%= game.slug %>/edit/?_method=PATCH' method = 'post' enctype='multipart/form-data'>
 
-	<%- include('../partials/formFields') %>
+	<%- include('../partials/formFields', {includeUpload: false}) %>
 
 	<%- include('../partials/errorMessage') %>
 

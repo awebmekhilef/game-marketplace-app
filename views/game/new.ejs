@@ -4,7 +4,7 @@
 
 <form action = '/game/new' method = 'post' enctype='multipart/form-data'>
 
-	<%- include('../partials/formFields') %>
+	<%- include('../partials/formFields', {includeUpload: true}) %>
 
 	<%- include('../partials/errorMessage') %>
 

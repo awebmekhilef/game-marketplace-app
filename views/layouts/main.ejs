@@ -25,12 +25,18 @@
 					rel = 'stylesheet'>
 
 	</head>
-	<body class = 'bg-light'>
+	<body class = 'bg-light d-flex flex-column min-vh-100'>
 		<%- include('../partials/navbar') %>
 
 		<div class = 'container-md'>
 			<%- body %>
 		</div>
+
+		<footer class='mt-auto' style='height: 60px; line-height: 60px; background-color: #f5f5f5'>
+			<div class='container-md'>
+				<span class='text-muted'>Made by Aweb Mekhilef</span>
+			</div>
+		</footer>
 
 		<script src = 'https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js'></script>
 		<script src = 'https://unpkg.com/filepond/dist/filepond.js'></script>

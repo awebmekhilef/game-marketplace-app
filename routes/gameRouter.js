@@ -2,6 +2,7 @@ const router = require('express').Router()
 const multer = require('multer')
 const admin = require('firebase-admin')
 const uuid = require('uuid')
+const path = require('path')
 
 const Game = require('../models/game')
 const Genre = require('../models/genre')
@@ -47,6 +48,7 @@ router.get('/:slug', async (req, res) => {
 			daysSinceUpdated: Math.floor((todayDate - game.updatedAt) / (1000 * 3600 * 24))
 		})
 	} catch (err) {
+		console.log(err)
 		res.redirect('/')
 	}
 })
@@ -70,12 +72,13 @@ router.post('/new', upload.single('gameFile'), async (req, res) => {
 	const bucket = admin.storage().bucket()
 
 	const blob = bucket
-		.file(uuid.v4())
+		.file(`${uuid.v4()}${path.extname(req.file.originalname)}`)
 
 	const blobStream = blob.createWriteStream({
 		metadata: {
 			contentType: req.file.mimetype
-		}
+		},
+		public: true
 	})
 
 	blobStream.on('error', err => console.error(err))
@@ -88,9 +91,9 @@ router.post('/new', upload.single('gameFile'), async (req, res) => {
 
 			res.redirect(`/game/${newGame.slug}`)
 		} catch (err) {
-			bucket.file(newGame.gameFileLocation).delete().then(() => {
-				renderNewPage(res, newGame, true)
-			})
+			await bucket.file(newGame.gameFileLocation).delete()
+
+			renderNewPage(res, newGame, true)
 		}
 	})
 
@@ -128,11 +131,9 @@ router.delete('/:slug', async (req, res) => {
 		const deletedGame = await Game.findOneAndDelete({ slug: req.params.slug })
 
 		const bucket = admin.storage().bucket()
+		await bucket.file(deletedGame.gameFileLocation).delete()
 
-		bucket.file(deletedGame.gameFileLocation).delete()
-			.then(() => {
-				res.redirect(`/`)
-			})
+		res.redirect(`/`)
 	} catch (err) {
 		res.redirect(`/game/${req.params.slug}/edit`)
 	}

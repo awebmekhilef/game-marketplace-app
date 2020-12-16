@@ -33,11 +33,13 @@
 								rows = '10'><%= game.description %></textarea>
 		</div>
 
+		<% if(includeUpload) { %>
 		<div class = 'custom-file'>
 			<input name = 'gameFile' type = 'file' class = 'custom-file-input' id = 'gameFile'>
 			<label class = 'custom-file-label' for = 'gameFile'>Upload file</label>
 			<small class = 'form-text text-muted'>File size limit: 100MB</small>
 		</div>
+		<% } %>
 	</div>
 
 	<div class = 'col-md-4' align = 'center'>
