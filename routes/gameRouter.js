@@ -1,5 +1,7 @@
 const router = require('express').Router()
 const multer = require('multer')
+const admin = require('firebase-admin')
+const uuid = require('uuid')
 
 const Game = require('../models/game')
 const Genre = require('../models/genre')
@@ -60,13 +62,39 @@ router.post('/new', upload.single('gameFile'), async (req, res) => {
 
 	trySaveCoverImage(newGame, req.body.cover)
 
-	try {
-		await newGame.save()
-
-		res.redirect(`/game/${newGame.slug}`)
-	} catch (err) {
+	if (req.file == null) {
 		renderNewPage(res, newGame, true)
+		return
 	}
+
+	const bucket = admin.storage().bucket()
+
+	const blob = bucket
+		.file(uuid.v4())
+
+	const blobStream = blob.createWriteStream({
+		metadata: {
+			contentType: req.file.mimetype
+		}
+	})
+
+	blobStream.on('error', err => console.error(err))
+
+	blobStream.on('finish', async () => {
+		newGame.gameFileLocation = encodeURI(blob.name)
+
+		try {
+			await newGame.save()
+
+			res.redirect(`/game/${newGame.slug}`)
+		} catch (err) {
+			bucket.file(newGame.gameFileLocation).delete().then(() => {
+				renderNewPage(res, newGame, true)
+			})
+		}
+	})
+
+	blobStream.end(req.file.buffer)
 })
 
 // EDIT GAME
@@ -97,9 +125,14 @@ router.patch('/:slug/edit', async (req, res) => {
 // DELETE GAME
 router.delete('/:slug', async (req, res) => {
 	try {
-		await Game.findOneAndDelete({ slug: req.params.slug })
+		const deletedGame = await Game.findOneAndDelete({ slug: req.params.slug })
 
-		res.redirect(`/`)
+		const bucket = admin.storage().bucket()
+
+		bucket.file(deletedGame.gameFileLocation).delete()
+			.then(() => {
+				res.redirect(`/`)
+			})
 	} catch (err) {
 		res.redirect(`/game/${req.params.slug}/edit`)
 	}

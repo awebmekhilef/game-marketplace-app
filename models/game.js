@@ -32,6 +32,10 @@ const gameSchema = new mongoose.Schema({
 		type: Buffer,
 		required: true
 	},
+	gameFileLocation: {
+		type: String,
+		required: true
+	},
 	slug: {
 		type: String,
 		required: true,
