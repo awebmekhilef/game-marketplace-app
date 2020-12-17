@@ -12,7 +12,7 @@
 - Express
 - MongoDB
 
-### How to run?
+## Get started
 1. Create firebase storage and admin service account
 2. Configure environment variables:
     - Set GOOGLE_CONFIG_BASE64 to base64 encoded service account key
