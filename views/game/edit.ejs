@@ -2,7 +2,7 @@
 	Edit game
 </h2>
 
-<form action = '/game/<%= game.slug %>/edit/?_method=PATCH' method = 'post' enctype='multipart/form-data'>
+<form action = '/game/<%= game.slug %>/edit/?_method=PATCH' method = 'post'>
 
 	<%- include('../partials/formFields', {includeUpload: false}) %>
 
