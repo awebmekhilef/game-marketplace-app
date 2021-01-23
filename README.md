@@ -6,7 +6,7 @@
 - Game querying system
 - Markdown description
 
-### Stack
+### Tech Stack
 - EJS
 - Node
 - Express
@@ -18,4 +18,4 @@
     - Set GOOGLE_CONFIG_BASE64 to base64 encoded service account key
     - Set BUCKET_NAME to firebase storage bucket name
     - Set DB_URI to MongoDB database uri
-3. Run start script
+3. Run `yarn start` script
