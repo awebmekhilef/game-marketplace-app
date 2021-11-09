@@ -1,5 +1,7 @@
 # Game Marketplace App
 
+Demo: https://game-marketplace-app.herokuapp.com/
+
 ### Features
 - CRUD game pages
 - Upload cover images and game files
